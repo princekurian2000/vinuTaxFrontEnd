@@ -1,0 +1,50 @@
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li ><a routerLink="/dashboard">Income</a></li>
+        <li class="active"><a routerLink="/expence">Expence</a></li>
+        <li><a routerLink="/report">Report</a></li>        
+      </ul>
+    <div class="row">
+        <div class=" col-sm-12 col-md-12 col-lg-12">
+            <div class = "panel panel-primary">
+                <div class = "panel-heading">
+                    <h2 class = "panel-title">Expence</h2>
+                </div>           
+               
+                <div class="table-responsive">
+                    <form #addressForm="ngForm"  (ngSubmit)="updateIncome()">
+                        <!-- some code here - see full code at the end of this tutorial -->                          
+                        <section >
+                            <!-- input fields inside the *ngFor -->
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                </tr>
+                                <tr *ngFor="let income of incomes; let i = index;let last = last;">
+                                    <td><input type="text" class="form-control" [(ngModel)]="income.description"
+                                        name="description_{{i}}" placeholder="Description" required/></td>
+                                    <td><input type="number" class="form-control" [(ngModel)]="income.amount"
+                                        name="amount_{{i}}" placeholder="Amount" required/>  </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm" (click)="removeIncomeField(i)"><i class="glyphicon glyphicon-remove"></i></button>
+                                    </td>
+                                    <td *ngIf="last">
+                                        <button type="button" class="btn btn-primary" (click)="addNewIncomeField()"><i class="glyphicon glyphicon-plus"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <br>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" align="center"><button type="submit"  class="btn btn-primary">SAVE</button></td>
+                                </tr>
+                            </table>  
+                         </section>
+                       </form>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>

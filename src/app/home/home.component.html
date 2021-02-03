@@ -25,8 +25,9 @@
         <ul class="nav navbar-nav navbar-right">
           <li *ngIf="!loggedin"><a routerLink="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
           <li *ngIf="!loggedin"><a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>  
-          <li *ngIf="loggedin"><a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> {{fullname}}</a></li>          
-          <li *ngIf="loggedin"><button type="button" class="btn btn-danger" (click)="logOut()">Logout</button></li>        
+          <li *ngIf="loggedin"><a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> {{fullname}}</a></li> 
+          <li *ngIf="loggedin"><a href="#" (click)="logOut()"  ><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>         
+                
         </ul>
       </div> 
     </div>

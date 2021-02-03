@@ -30,6 +30,17 @@ export class LoginComponent implements OnInit {
       this.loggedIn = (user != null);
       if(this.loggedIn){
         this.sharedService.updateComp1Val(user.name);
+
+        this.api.checkUserNameAvailable(user.email).subscribe((data:any)=>{
+          if(data.msg=="Already Registered"){
+            window.alert("Already Registered Google User.");             
+          }
+          else{
+            this.api.insertNewUser(user.name,user.email,"  ").subscribe((data:any)=>{
+             
+            }); 
+          }  
+        });  
         this.router.navigate(['/dashboard']);
         localStorage.setItem("uName",user.name);
         localStorage.setItem("loggedIn","true");

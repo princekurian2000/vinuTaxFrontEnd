@@ -10,13 +10,17 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import {  GoogleLoginProvider, FacebookLoginProvider} from 'angularx-social-login';
 import {HttpClientModule} from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ExpenceComponent } from './expence/expence.component';
+import { ReportComponent } from './report/report.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
     SignupComponent,
-    DashboardComponent
+    DashboardComponent,    
+    ExpenceComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,

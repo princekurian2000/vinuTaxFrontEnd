@@ -18,8 +18,7 @@ export class HomeComponent implements OnInit ,AfterContentChecked{
   ngOnInit(): void {
    
   }
-  logOut(){
-    window.alert("clicked");
+  logOut(){    
     localStorage.removeItem("loggedIn");
     localStorage.removeItem("uName");
     this.router.navigate(['']);
