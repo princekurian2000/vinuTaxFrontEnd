@@ -22,4 +22,17 @@ export class ApiService {
   authenticateUser(userEmail:string,password:string){    
     return this.http.post("http://localhost:3000/authenticate",{"userEmailId":userEmail,"password":this.findHash(password)}) ; 
   }
+  checkCategoryAvailable(category:String){
+    //return this.http.post("https://exambackend.herokuapp.com/insert",{"user":user})     
+    return this.http.post("http://localhost:3000/checkAvailabilityCategory",{"category":category}) ;  
+  }
+  insertNewCategory(category:string){      
+    return this.http.post("http://localhost:3000/insertNewCategory",{"category":category});
+  }
+  getCategories(){
+    return this.http.get("http://localhost:3000/getCategories");
+  }
+  updateIncomes(email:string,incomes:any[]){
+     return this.http.post("http://localhost:3000/updateIncomes",{"email":email,"incomes":incomes});
+  }
 }

@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
         });  
         this.router.navigate(['/dashboard']);
         localStorage.setItem("uName",user.name);
+        localStorage.setItem("uEmail",user.email);
         localStorage.setItem("loggedIn","true");
       }
     });
@@ -59,9 +60,11 @@ export class LoginComponent implements OnInit {
              if(result){
                window.alert("success");
                window.alert(data[0].userFullName);
+               console.log(data[0]);
                this.loggedIn=true;
                this.sharedService.updateComp1Val(data[0].userFullName);
                localStorage.setItem("uName",data[0].userFullName);
+               localStorage.setItem("uEmail",this.email);
                localStorage.setItem("loggedIn","true");               
               this.router.navigate(['/dashboard']);
              }

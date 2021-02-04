@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit ,AfterContentChecked{
   logOut(){    
     localStorage.removeItem("loggedIn");
     localStorage.removeItem("uName");
+    localStorage.removeItem("uEmail");
     this.router.navigate(['']);
   }
   ngAfterContentChecked() {
