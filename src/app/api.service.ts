@@ -26,13 +26,29 @@ export class ApiService {
     //return this.http.post("https://exambackend.herokuapp.com/insert",{"user":user})     
     return this.http.post("http://localhost:3000/checkAvailabilityCategory",{"category":category}) ;  
   }
+  checkExpenceCategoryAvailable(category:String){
+    //return this.http.post("https://exambackend.herokuapp.com/insert",{"user":user})     
+    return this.http.post("http://localhost:3000/checkAvailabilityExpenceCategory",{"category":category}) ;  
+  }
   insertNewCategory(category:string){      
     return this.http.post("http://localhost:3000/insertNewCategory",{"category":category});
+  }
+  insertNewExpenceCategory(category:string){      
+    return this.http.post("http://localhost:3000/insertNewExpenceCategory",{"category":category});
   }
   getCategories(){
     return this.http.get("http://localhost:3000/getCategories");
   }
+  getExpenceCategories(){
+    return this.http.get("http://localhost:3000/getExpenceCategories");
+  }
   updateIncomes(email:string,incomes:any[]){
      return this.http.post("http://localhost:3000/updateIncomes",{"email":email,"incomes":incomes});
   }
+  updateExpences(email:string,expences:any[]){
+    return this.http.post("http://localhost:3000/updateExpences",{"email":email,"expences":expences});
+ }
+ getAllIncomeAndExpences(email:string){
+  return this.http.post("http://localhost:3000/getIncomesExpence",{"email":email});
+ }
 }

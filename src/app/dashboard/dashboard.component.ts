@@ -67,19 +67,22 @@ export class DashboardComponent implements OnInit {
     //Add category to database
     
     this.incomes[i].category=this.incomes[i].category.trim();
-    this.api.checkCategoryAvailable(this.incomes[i].category).subscribe((data:any)=>{
-      if(data.msg=="Available"){
-        window.alert("New Category Found");   
-      this.api.insertNewCategory(this.incomes[i].category).subscribe((data:any)=>{
-         console.log(data.msg);
-         window.alert(data.msg);          
-        });
-        this.options.push(this.incomes[i].category);
-      }
-      else{       
-        window.alert("Old category");
-      }  
-    });  
+    if(this.incomes[i].category!=""){
+      this.api.checkCategoryAvailable(this.incomes[i].category).subscribe((data:any)=>{
+        if(data.msg=="Available"){
+          window.alert("New Category Found");   
+        this.api.insertNewCategory(this.incomes[i].category).subscribe((data:any)=>{
+           console.log(data.msg);
+           window.alert(data.msg);          
+          });
+          this.options.push(this.incomes[i].category);
+        }
+        else{       
+          //window.alert("Old category");
+        }  
+      }); 
+    }
+    
   }
 
 

@@ -4,6 +4,47 @@
         <li><a routerLink="/expence">Expence</a></li>
         <li class="active"><a routerLink="/report">Report</a></li>        
       </ul>
-      <h2>REPORT PAGE</h2>
+      <div class="col col-sm-4 col-md-4 col-lg-4">
+
+      </div>
+      <div class="col col-sm-4 col-md-4 col-lg-4">
+        <div class="table-responsive">
+          <table class="table ">
+              <tr>
+                <th  colspan="2" style="text-align: center;font-weight: 800;font-size: larger;">REPORT</th>                        
+            </tr>
+              <tr>
+                  <th  colspan="2">Incomes</th>                        
+              </tr>
+              <tr *ngFor="let income of incomes; let i = index;">
+                <td>{{income.category}}</td>
+                <td>{{income.amount}}</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;font-weight: bold;">Total Income</td>
+                <td style="font-weight: bold;">{{totalincome}}</td>
+              </tr>
+              <tr>
+                <th colspan="2">Expences</th>                        
+            </tr>
+            <tr *ngFor="let expence of expences; let i = index;">
+              <td>{{expence.category}}</td>
+              <td>{{expence.amount}}</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;font-weight: bold;">Total Expence</td>
+              <td style="font-weight: bold;">{{totalexpence}}</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;font-weight: bold;">Net Income</td>
+              <td style="font-weight: bold;">{{netincome}}</td>
+            </tr>
+          </table>
+        </div> 
+      </div>
+      <div class="col col-sm-4 col-md-4 col-lg-4">
+
+      </div>
+          
 </div>
 
