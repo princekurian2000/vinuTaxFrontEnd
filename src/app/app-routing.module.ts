@@ -3,9 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
-import {DashboardComponent} from './dashboard/dashboard.component';
+import {DashboardComponent} from './dashboard/dashboard.component'
 import {ExpenceComponent} from './expence/expence.component'
 import { ReportComponent } from './report/report.component';
+import {SummaryComponent} from './summary/summary.component'
 
 const routes: Routes = [{path:'login',component:LoginComponent},
                         {path:'home',component:HomeComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [{path:'login',component:LoginComponent},
                         {path:'dashboard',component:DashboardComponent},                       
                         {path:'expence',component:ExpenceComponent},
                         {path:'report',component:ReportComponent},
-                        {path:'',component:LoginComponent}
+                        {path:'',component:LoginComponent},
+                        {path:'summary',component:SummaryComponent}
                       ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

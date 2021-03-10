@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit ,AfterContentChecked{
    loggedin=false;
   constructor(private sharedService:SharedService,private router:Router) {
     if(localStorage.getItem("loggedIn")=="true"){
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/summary']);
     }
    }
   ngOnInit(): void {

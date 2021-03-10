@@ -12,6 +12,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ExpenceComponent } from './expence/expence.component';
 import { ReportComponent } from './report/report.component';
+import { SummaryComponent } from './summary/summary.component';
+import {ChartsModule} from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,14 +22,16 @@ import { ReportComponent } from './report/report.component';
     SignupComponent,
     DashboardComponent,    
     ExpenceComponent,
-    ReportComponent
+    ReportComponent,
+    SummaryComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SocialLoginModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ChartsModule
   ],
   providers: [
     {

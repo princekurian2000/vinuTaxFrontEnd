@@ -1,13 +1,14 @@
 <div class="container">
     <ul class="nav nav-tabs">
+        <li ><a routerLink="/summary">Summary</a></li>
         <li ><a routerLink="/dashboard">Income</a></li>
         <li><a routerLink="/expence">Expence</a></li>
         <li class="active"><a routerLink="/report">Report</a></li>        
       </ul>
-      <div class="col col-sm-4 col-md-4 col-lg-4">
+      <div class="col col-sm-4 col-md-2 col-lg-2">
 
       </div>
-      <div class="col col-sm-4 col-md-4 col-lg-4">
+      <div class="col col-sm-4 col-md-8 col-lg-8">
         <div class="table-responsive">
           <table class="table ">
               <tr>
@@ -16,9 +17,12 @@
               <tr>
                   <th  colspan="2">Incomes</th>                        
               </tr>
-              <tr *ngFor="let income of incomes; let i = index;">
-                <td>{{income.category}}</td>
-                <td>{{income.amount}}</td>
+              <!-- <tr *ngFor="let income of incomes; let i = index;"> -->
+                <tr *ngFor="let income of consolidatedincomes | keyvalue; let i = index;">
+                <td>{{income.key}}</td>
+                <td>{{income.value}}</td>
+                <!-- <td>{{income.category}}</td>
+                <td>{{income.amount}}</td> -->
               </tr>
               <tr>
                 <td style="text-align: center;font-weight: bold;">Total Income</td>
@@ -27,9 +31,9 @@
               <tr>
                 <th colspan="2">Expences</th>                        
             </tr>
-            <tr *ngFor="let expence of expences; let i = index;">
-              <td>{{expence.category}}</td>
-              <td>{{expence.amount}}</td>
+            <tr *ngFor="let expence of consolidatedexpences | keyvalue; let i = index;">
+              <td>{{expence.key}}</td>
+              <td>{{expence.value}}</td>
             </tr>
             <tr>
               <td style="text-align: center;font-weight: bold;">Total Expence</td>
@@ -42,7 +46,7 @@
           </table>
         </div> 
       </div>
-      <div class="col col-sm-4 col-md-4 col-lg-4">
+      <div class="col col-sm-4 col-md-2 col-lg-2">
 
       </div>
           

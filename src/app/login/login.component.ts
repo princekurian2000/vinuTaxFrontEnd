@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   loggedIn: boolean;
   constructor( private api:ApiService,private authService: SocialAuthService,private router:Router,private sharedService: SharedService) {    
     if(localStorage.getItem("loggedIn")=="true"){
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/summary']);
     }
    }  
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
             }); 
           }  
         });  
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/summary']);
         localStorage.setItem("uName",user.name);
         localStorage.setItem("uEmail",user.email);
         localStorage.setItem("loggedIn","true");
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
                localStorage.setItem("uName",data[0].userFullName);
                localStorage.setItem("uEmail",this.email);
                localStorage.setItem("loggedIn","true");               
-              this.router.navigate(['/dashboard']);
+              this.router.navigate(['/summary']);
              }
              else{
               window.alert("Invalid  Credentials");
