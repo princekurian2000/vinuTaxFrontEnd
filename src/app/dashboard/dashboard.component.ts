@@ -9,6 +9,7 @@ import {ApiService} from '../api.service'
 })
 export class DashboardComponent implements OnInit {
   username="";
+  categoryadded=false;
   public incomes: any[] = [{
     category: '',    
     description: '',
@@ -48,6 +49,24 @@ export class DashboardComponent implements OnInit {
   updateIncome(){
     //window.alert("Saved Successfully");
     this.email=localStorage.getItem("uEmail");
+    if(this.categoryadded==false){
+      this.incomes[0].category=this.incomes[0].category.trim();
+      if(this.incomes[0].category!=""){
+        this.api.checkCategoryAvailable(this.incomes[0].category).subscribe((data:any)=>{
+          if(data.msg=="Available"){
+            window.alert("New Category Found");   
+          this.api.insertNewCategory(this.incomes[0].category).subscribe((data:any)=>{
+             console.log(data.msg);
+             window.alert(data.msg);          
+            });
+            this.options.push(this.incomes[0].category);
+          }
+          else{       
+            //window.alert("Old category");
+          }  
+        }); 
+      }
+    }
     this.api.updateIncomes(this.email,this.incomes).subscribe((data:any)=>{
       if(data.msg=="Updated"){
         window.alert("Saved Successfully");
@@ -59,6 +78,7 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/expence']);
   }
   addNewIncomeField(i: number){
+    this.categoryadded=true;
     this.incomes.push({
       description: '',
       amount: '',
