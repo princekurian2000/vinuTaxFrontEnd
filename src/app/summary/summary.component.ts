@@ -54,13 +54,13 @@ export class SummaryComponent implements OnInit {
       this.router.navigate(['']);
     }
     this.username=localStorage.getItem("uName"); 
-    if((this.today.getTime()> new Date('2020-06-01').getTime())&&(this.today.getTime()< new Date('2021-05-31').getTime())){
+    if((this.today.getTime()> new Date('2020-04-06').getTime())&&(this.today.getTime()< new Date('2021-04-05').getTime())){
       this.selectedYear="20";
     }
-    if((this.today.getTime()> new Date('2021-06-01').getTime())&&(this.today.getTime()< new Date('2022-05-31').getTime())){
+    if((this.today.getTime()> new Date('2021-04-06').getTime())&&(this.today.getTime()< new Date('2022-04-05').getTime())){
       this.selectedYear="21";
     }
-    if((this.today.getTime()> new Date('2022-06-01').getTime())&&(this.today.getTime()< new Date('2023-05-31').getTime())){
+    if((this.today.getTime()> new Date('2022-04-06').getTime())&&(this.today.getTime()< new Date('2023-04-05').getTime())){
       this.selectedYear="22";
     }
     this.getIncomesAndExpences();
@@ -79,43 +79,43 @@ export class SummaryComponent implements OnInit {
             var dateString=this.incomes[i].date;
             let incomeDate = new Date(dateString);  
             if(this.selectedYear=="19"){
-              if((incomeDate.getTime()< new Date('2019-06-01').getTime())||(incomeDate.getTime()> new Date('2020-05-31').getTime())){
+              if((incomeDate.getTime()< new Date('2019-04-06').getTime())||(incomeDate.getTime()> new Date('2020-04-05').getTime())){
                 this.incomes.splice(i,1);
                 i--;
               }
             } 
             else if(this.selectedYear=="20"){
-              if((incomeDate.getTime()< new Date('2020-06-01').getTime())||(incomeDate.getTime()> new Date('2021-05-31').getTime())){
+              if((incomeDate.getTime()< new Date('2020-04-06').getTime())||(incomeDate.getTime()> new Date('2021-04-05').getTime())){
                 this.incomes.splice(i,1);
                 i--;
               }
             }   
             else if(this.selectedYear=="21"){
-              if((incomeDate.getTime()< new Date('2021-06-01').getTime())||(incomeDate.getTime()> new Date('2022-05-31').getTime())){
+              if((incomeDate.getTime()< new Date('2021-04-06').getTime())||(incomeDate.getTime()> new Date('2022-04-05').getTime())){
                 this.incomes.splice(i,1);
                 i--;
               }
             }   
             else if(this.selectedYear=="22"){
-              if((incomeDate.getTime()< new Date('2022-06-01').getTime())||(incomeDate.getTime()> new Date('2023-05-31').getTime())){
+              if((incomeDate.getTime()< new Date('2022-04-06').getTime())||(incomeDate.getTime()> new Date('2023-04-05').getTime())){
                 this.incomes.splice(i,1);
                 i--;
               }
             }  
             else if(this.selectedYear=="23"){
-              if((incomeDate.getTime()< new Date('2023-06-01').getTime())||(incomeDate.getTime()> new Date('2024-05-31').getTime())){
+              if((incomeDate.getTime()< new Date('2023-04-06').getTime())||(incomeDate.getTime()> new Date('2024-04-05').getTime())){
                 this.incomes.splice(i,1);
                 i--;
               }
             } 
             else if(this.selectedYear=="24"){                 
-              if((incomeDate.getTime()< new Date('2024-06-01').getTime())||(incomeDate.getTime()> new Date('2025-05-31').getTime())){
+              if((incomeDate.getTime()< new Date('2024-04-06').getTime())||(incomeDate.getTime()> new Date('2025-04-05').getTime())){
                 this.incomes.splice(i,1);
                 i--;           
               }
             } 
             if(this.selectedYear=="25"){
-              if((incomeDate.getTime()< new Date('2025-06-01').getTime())||(incomeDate.getTime()> new Date('2026-05-31').getTime())){
+              if((incomeDate.getTime()< new Date('2025-04-06').getTime())||(incomeDate.getTime()> new Date('2026-04-05').getTime())){
                 this.incomes.splice(i,1);
                 i--;
               }
@@ -126,43 +126,43 @@ export class SummaryComponent implements OnInit {
             var dateString=this.expences[i].date;
             let expenceDate = new Date(dateString);  
             if(this.selectedYear=="19"){
-              if((expenceDate.getTime()< new Date('2019-06-01').getTime())||(expenceDate.getTime()> new Date('2020-05-31').getTime())){
+              if((expenceDate.getTime()< new Date('2019-04-06').getTime())||(expenceDate.getTime()> new Date('2020-04-05').getTime())){
                 this.expences.splice(i,1);
                 i--;
               }
             } 
             else if(this.selectedYear=="20"){
-              if((expenceDate.getTime()< new Date('2020-06-01').getTime())||(expenceDate.getTime()> new Date('2021-05-31').getTime())){
+              if((expenceDate.getTime()< new Date('2020-04-06').getTime())||(expenceDate.getTime()> new Date('2021-04-05').getTime())){
                 this.expences.splice(i,1);
                 i--;
               }
             }   
             else if(this.selectedYear=="21"){
-              if((expenceDate.getTime()< new Date('2021-06-01').getTime())||(expenceDate.getTime()> new Date('2022-05-31').getTime())){
+              if((expenceDate.getTime()< new Date('2021-04-06').getTime())||(expenceDate.getTime()> new Date('2022-04-05').getTime())){
                 this.expences.splice(i,1);
                 i--;
               }
             }   
             else if(this.selectedYear=="22"){
-              if((expenceDate.getTime()< new Date('2022-06-01').getTime())||(expenceDate.getTime()> new Date('2023-05-31').getTime())){
+              if((expenceDate.getTime()< new Date('2022-04-06').getTime())||(expenceDate.getTime()> new Date('2023-04-05').getTime())){
                 this.expences.splice(i,1);
                 i--;
               }
             }  
             else if(this.selectedYear=="23"){
-              if((expenceDate.getTime()< new Date('2023-06-01').getTime())||(expenceDate.getTime()> new Date('2024-05-31').getTime())){
+              if((expenceDate.getTime()< new Date('2023-04-06').getTime())||(expenceDate.getTime()> new Date('2024-04-05').getTime())){
                 this.expences.splice(i,1);
                 i--;
               }
             } 
             else if(this.selectedYear=="24"){                 
-              if((expenceDate.getTime()< new Date('2024-06-01').getTime())||(expenceDate.getTime()> new Date('2025-05-31').getTime())){
+              if((expenceDate.getTime()< new Date('2024-04-06').getTime())||(expenceDate.getTime()> new Date('2025-04-05').getTime())){
                 this.expences.splice(i,1);
                 i--;           
               }
             } 
             if(this.selectedYear=="25"){
-              if((expenceDate.getTime()< new Date('2025-06-01').getTime())||(expenceDate.getTime()> new Date('2026-05-31').getTime())){
+              if((expenceDate.getTime()< new Date('2025-04-06').getTime())||(expenceDate.getTime()> new Date('2026-04-05').getTime())){
                 this.expences.splice(i,1);
                 i--;
               }

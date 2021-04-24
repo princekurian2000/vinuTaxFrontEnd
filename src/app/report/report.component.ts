@@ -11,33 +11,77 @@ export class ReportComponent implements OnInit {
   email="";
   today = new Date();  
   selectedYear="";  
+  selectedQuarter="";
   incomes=[];
   expences=[];
   result=[];
   totalincome=0;
   totalexpence=0;
   netincome=0;
+  lowerdate="";
+  higherdate="";
+  hmrcbtndisabled=true;
+     
   consolidatedincomes = new Map<string, number>();
   consolidatedexpences= new Map<string, number>();
   constructor(private router:Router,private api:ApiService) { 
     if(localStorage.getItem("loggedIn")!="true"){
       this.router.navigate(['']);
     }
-    if((this.today.getTime()> new Date('2020-06-01').getTime())&&(this.today.getTime()< new Date('2021-05-31').getTime())){
+    if((this.today.getTime()> new Date('2020-04-06').getTime())&&(this.today.getTime()< new Date('2021-04-05').getTime())){
       this.selectedYear="20";
     }
-    if((this.today.getTime()> new Date('2021-06-01').getTime())&&(this.today.getTime()< new Date('2022-05-31').getTime())){
+    if((this.today.getTime()> new Date('2021-04-06').getTime())&&(this.today.getTime()< new Date('2022-04-05').getTime())){
       this.selectedYear="21";
     }
-    if((this.today.getTime()> new Date('2022-06-01').getTime())&&(this.today.getTime()< new Date('2023-05-31').getTime())){
+    if((this.today.getTime()> new Date('2022-04-06').getTime())&&(this.today.getTime()< new Date('2023-04-05').getTime())){
       this.selectedYear="22";
     }
+    this.lowerdate="20"+this.selectedYear+"-04-06";
+    this.higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-04-05";
+    this.selectedQuarter="0";
+    this.hmrcbtndisabled=true;
     this.getIncomesAndExpences();
   }
-
   ngOnInit(): void {
   }
   yearChange(){
+    this.lowerdate="20"+this.selectedYear+"-04-06";
+    this.higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-04-05";    
+    this.quarterChange();   
+   // this.getIncomesAndExpences(); 
+  }
+  quarterChange(){
+    this.hmrcbtndisabled=true;
+    if(this.selectedQuarter=="0"){
+      this.lowerdate="20"+this.selectedYear+"-04-06";
+      this.higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-04-05";
+    }
+    else if(this.selectedQuarter=="1"){
+      this.lowerdate="20"+this.selectedYear+"-04-06";
+      this.higherdate="20"+this.selectedYear+"-07-05";
+    }
+    else if(this.selectedQuarter=="2"){
+      this.lowerdate="20"+this.selectedYear+"-07-06";
+      this.higherdate="20"+this.selectedYear+"-10-05";
+    }
+    else if(this.selectedQuarter=="3"){
+      this.lowerdate="20"+this.selectedYear+"-10-06";
+      this.higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-01-05";
+    }
+    else if(this.selectedQuarter=="4"){
+      this.lowerdate="20"+(parseInt(this.selectedYear)+1).toString()+"-01-6";
+      this.higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-04-05";
+    }
+    this.api.checkHmrcDataUploaded(this.email,this.selectedYear,this.selectedQuarter).subscribe(async (data:any)=>{
+      
+      if((data.msg=="Not Uploaded")&&(this.selectedQuarter!="0")){
+        if((this.today.getTime()> new Date(this.higherdate).getTime())){   
+          //Enable hmrc Enable button  
+          this.hmrcbtndisabled=false;
+        }
+      }
+    });    
     this.getIncomesAndExpences();    
   }
   getIncomesAndExpences(){ 
@@ -52,101 +96,28 @@ export class ReportComponent implements OnInit {
     this.api.getAllIncomeAndExpences(this.email).subscribe(async (data:any)=>{     
       this.incomes=data[0].incomes;
       this.expences=data[0].expences;
-      //year wise income fetching
+      //year wise income 
+      
+      // var lowerdate="20"+this.selectedYear+"-04-06";
+      // var higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-04-05";
+     
       for(var i=0;i<this.incomes.length;i++){
         var dateString=this.incomes[i].date;
-        let incomeDate = new Date(dateString);  
-        if(this.selectedYear=="19"){
-          if((incomeDate.getTime()< new Date('2019-06-01').getTime())||(incomeDate.getTime()> new Date('2020-05-31').getTime())){
+        let incomeDate = new Date(dateString); 
+          if((incomeDate.getTime()< new Date(this.lowerdate).getTime())||(incomeDate.getTime()> new Date(this.higherdate).getTime())){
             this.incomes.splice(i,1);
             i--;
-          }
-        } 
-        else if(this.selectedYear=="20"){
-          if((incomeDate.getTime()< new Date('2020-06-01').getTime())||(incomeDate.getTime()> new Date('2021-05-31').getTime())){
-            this.incomes.splice(i,1);
-            i--;
-          }
-        }   
-        else if(this.selectedYear=="21"){
-          if((incomeDate.getTime()< new Date('2021-06-01').getTime())||(incomeDate.getTime()> new Date('2022-05-31').getTime())){
-            this.incomes.splice(i,1);
-            i--;
-          }
-        }   
-        else if(this.selectedYear=="22"){
-          if((incomeDate.getTime()< new Date('2022-06-01').getTime())||(incomeDate.getTime()> new Date('2023-05-31').getTime())){
-            this.incomes.splice(i,1);
-            i--;
-          }
-        }  
-        else if(this.selectedYear=="23"){
-          if((incomeDate.getTime()< new Date('2023-06-01').getTime())||(incomeDate.getTime()> new Date('2024-05-31').getTime())){
-            this.incomes.splice(i,1);
-            i--;
-          }
-        } 
-        else if(this.selectedYear=="24"){                 
-          if((incomeDate.getTime()< new Date('2024-06-01').getTime())||(incomeDate.getTime()> new Date('2025-05-31').getTime())){
-            this.incomes.splice(i,1);
-            i--;           
-          }
-        } 
-        if(this.selectedYear=="25"){
-          if((incomeDate.getTime()< new Date('2025-06-01').getTime())||(incomeDate.getTime()> new Date('2026-05-31').getTime())){
-            this.incomes.splice(i,1);
-            i--;
-          }
-        } 
+          }  
       }
       //yearwise expence fetching
       for(var i=0;i<this.expences.length;i++){
         var dateString=this.expences[i].date;
-        let expenceDate = new Date(dateString);  
-        if(this.selectedYear=="19"){
-          if((expenceDate.getTime()< new Date('2019-06-01').getTime())||(expenceDate.getTime()> new Date('2020-05-31').getTime())){
+        let expenceDate = new Date(dateString); 
+            if((expenceDate.getTime()< new Date(this.lowerdate).getTime())||(expenceDate.getTime()> new Date(this.higherdate).getTime())){
             this.expences.splice(i,1);
             i--;
           }
-        } 
-        else if(this.selectedYear=="20"){
-          if((expenceDate.getTime()< new Date('2020-06-01').getTime())||(expenceDate.getTime()> new Date('2021-05-31').getTime())){
-            this.expences.splice(i,1);
-            i--;
-          }
-        }   
-        else if(this.selectedYear=="21"){
-          if((expenceDate.getTime()< new Date('2021-06-01').getTime())||(expenceDate.getTime()> new Date('2022-05-31').getTime())){
-            this.expences.splice(i,1);
-            i--;
-          }
-        }   
-        else if(this.selectedYear=="22"){
-          if((expenceDate.getTime()< new Date('2022-06-01').getTime())||(expenceDate.getTime()> new Date('2023-05-31').getTime())){
-            this.expences.splice(i,1);
-            i--;
-          }
-        }  
-        else if(this.selectedYear=="23"){
-          if((expenceDate.getTime()< new Date('2023-06-01').getTime())||(expenceDate.getTime()> new Date('2024-05-31').getTime())){
-            this.expences.splice(i,1);
-            i--;
-          }
-        } 
-        else if(this.selectedYear=="24"){                 
-          if((expenceDate.getTime()< new Date('2024-06-01').getTime())||(expenceDate.getTime()> new Date('2025-05-31').getTime())){
-            this.expences.splice(i,1);
-            i--;           
-          }
-        } 
-        if(this.selectedYear=="25"){
-          if((expenceDate.getTime()< new Date('2025-06-01').getTime())||(expenceDate.getTime()> new Date('2026-05-31').getTime())){
-            this.expences.splice(i,1);
-            i--;
-          }
-        } 
       }
-
       this.incomes.forEach(element => {        
         this.totalincome=this.totalincome+element.amount;
       });
@@ -156,17 +127,14 @@ export class ReportComponent implements OnInit {
                   this.consolidatedincomes.set(category, (this.consolidatedincomes.get(category) || 0) + amount);                  
                   resolve();                
             }); 
-      }
-      
+      }      
       //cumiative expence category wise
       for(const {category, amount} of this.expences) {
             await new Promise<void>(resolve => {                
                 this.consolidatedexpences.set(category, (this.consolidatedexpences.get(category) || 0) + amount);                  
                 resolve();                
              }); 
-      }
-      
-      
+      }    
      // let jsonString = JSON.stringify(jsonObject);
       
       //finding total expence      
@@ -176,5 +144,16 @@ export class ReportComponent implements OnInit {
       this.netincome=this.totalincome-this.totalexpence;
     }); 
   }
-
+  hmrcCall(){
+    this.api.hmrcCall().subscribe((data)=>{
+      console.log(data);
+   });
+    this.api.hmrcDataUploaded(this.email,this.selectedYear,this.selectedQuarter).subscribe(async (data:any)=>{
+      if((data.msg=="Successfully Inserted")){
+        window.alert("successfully Inserted");
+        this.quarterChange();
+      }
+    });  
+   
+  }
 }

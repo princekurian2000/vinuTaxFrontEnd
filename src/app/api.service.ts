@@ -51,4 +51,13 @@ export class ApiService {
  getAllIncomeAndExpences(email:string){
   return this.http.post("http://localhost:3000/getIncomesExpence",{"email":email});
  }
+ hmrcCall(){
+   return this.http.get("http://localhost:8080/unrestrictedCall");
+ }
+ checkHmrcDataUploaded(email:string,year:string,quarter:string){
+  return this.http.post("http://localhost:3000/checkHmrcUploaded",{"userEmailId":email,"year":year,"quarter":quarter});
+}
+hmrcDataUploaded(email:string,year:string,quarter:string){
+  return this.http.post("http://localhost:3000/hmrcUploaded",{"userEmailId":email,"year":year,"quarter":quarter});
+}
 }

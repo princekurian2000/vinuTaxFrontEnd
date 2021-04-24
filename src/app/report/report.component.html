@@ -12,7 +12,7 @@
         <div class="table-responsive">
           <table class="table ">
               <tr>
-                <th  colspan="2" style="text-align: center;font-size: larger;">
+                <th  colspan="1" style="text-align: center;font-size: larger;">
                   <select class="form-control" [(ngModel)]="selectedYear" (change)="yearChange()">
                     <option value="19">19-20</option>                    
                     <option value="20"  selected>20-21</option>                    
@@ -21,6 +21,15 @@
                     <option value="23">23-24</option>
                     <option value="24">24-25</option>
                     <option value="25">25-26</option>
+                  </select>                                    
+                </th> 
+                <th  colspan="1" style="text-align: center;font-size: larger;">
+                  <select class="form-control" [(ngModel)]="selectedQuarter" (change)="quarterChange()">
+                    <option value="0" selected>All</option> 
+                    <option value="1">Q1</option>
+                    <option value="2">Q2</option>
+                    <option value="3">Q3</option>
+                    <option value="4">Q4</option>
                   </select>                                    
                 </th>                                       
             </tr>
@@ -55,6 +64,9 @@
             <tr>
               <td style="text-align: center;font-weight: bold;">Net Income</td>
               <td style="font-weight: bold;">{{netincome}}</td>
+            </tr>
+            <tr>
+              <td colspan="2" align="center"><button type="button" [disabled]="hmrcbtndisabled" class="btn btn-primary" (click)="hmrcCall()">SAVE TO HMRC</button></td>
             </tr>
           </table>
         </div> 
