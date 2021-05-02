@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {ApiService} from '../api.service'
-
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.css']
+  selector: 'app-allaccounts',
+  templateUrl: './allaccounts.component.html',
+  styleUrls: ['./allaccounts.component.css']
 })
-export class ReportComponent implements OnInit {
+export class AllaccountsComponent implements OnInit {
   email="";
   today = new Date();  
   selectedYear="";  
@@ -20,8 +19,8 @@ export class ReportComponent implements OnInit {
   netincome=0;
   lowerdate="";
   higherdate="";
-  hmrcbtndisabled=true;
-     
+  displayincomes=[];
+ 
   consolidatedincomes = new Map<string, number>();
   consolidatedexpences= new Map<string, number>();
   constructor(private router:Router,private api:ApiService) { 
@@ -40,10 +39,12 @@ export class ReportComponent implements OnInit {
     this.lowerdate="20"+this.selectedYear+"-04-06";
     this.higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-04-05";
     this.selectedQuarter="0";
-    this.hmrcbtndisabled=true;
+
     this.getIncomesAndExpences();
   }
+
   ngOnInit(): void {
+   
   }
   yearChange(){
     this.lowerdate="20"+this.selectedYear+"-04-06";
@@ -51,8 +52,9 @@ export class ReportComponent implements OnInit {
     this.quarterChange();   
    // this.getIncomesAndExpences(); 
   }
+
   quarterChange(){
-    this.hmrcbtndisabled=true;
+    //this.hmrcbtndisabled=true;
     if(this.selectedQuarter=="0"){
       this.lowerdate="20"+this.selectedYear+"-04-06";
       this.higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-04-05";
@@ -73,16 +75,24 @@ export class ReportComponent implements OnInit {
       this.lowerdate="20"+(parseInt(this.selectedYear)+1).toString()+"-01-6";
       this.higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-04-05";
     }
-    this.api.checkHmrcDataUploaded(this.email,this.selectedYear,this.selectedQuarter).subscribe(async (data:any)=>{
-      
+    this.api.checkHmrcDataUploaded(this.email,this.selectedYear,this.selectedQuarter).subscribe(async (data:any)=>{      
       if((data.msg=="Not Uploaded")&&(this.selectedQuarter!="0")){
         if((this.today.getTime()> new Date(this.higherdate).getTime())){   
           //Enable hmrc Enable button  
-          this.hmrcbtndisabled=false;
+          // this.hmrcbtndisabled=false;
         }
       }
     });    
     this.getIncomesAndExpences();    
+  }
+  onItemClick (event, data){ 
+    this.displayincomes=[];
+    for(var i=0;i<this.incomes.length;i++){
+      var category=this.incomes[i].category;     
+        if(category==data){
+          this.displayincomes.push(this.incomes[i]);
+        }  
+    }
   }
   getIncomesAndExpences(){ 
     this.incomes=[]   ;
@@ -95,12 +105,7 @@ export class ReportComponent implements OnInit {
     this.email=localStorage.getItem("uEmail");   
     this.api.getAllIncomeAndExpences(this.email).subscribe(async (data:any)=>{     
       this.incomes=data[0].incomes;
-      this.expences=data[0].expences;
-      //year wise income 
-      
-      // var lowerdate="20"+this.selectedYear+"-04-06";
-      // var higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-04-05";
-     
+      this.expences=data[0].expences; 
       for(var i=0;i<this.incomes.length;i++){
         var dateString=this.incomes[i].date;
         let incomeDate = new Date(dateString); 
@@ -109,6 +114,7 @@ export class ReportComponent implements OnInit {
             i--;
           }  
       }
+      
       //yearwise expence fetching
       for(var i=0;i<this.expences.length;i++){
         var dateString=this.expences[i].date;
@@ -144,18 +150,5 @@ export class ReportComponent implements OnInit {
       this.netincome=this.totalincome-this.totalexpence;
     }); 
   }
-  hmrcCall(){
-    this.api.hmrcCall().subscribe((data:any)=>{
-      console.log(data);
-      window.alert(data.message);
-      this.api.hmrcDataUploaded(this.email,this.selectedYear,this.selectedQuarter).subscribe(async (data:any)=>{
-        if((data.msg=="Successfully Inserted")){
-          window.alert("successfully Inserted");
-          this.quarterChange();
-        }
-      });  
-   });
-    
-   
-  }
+
 }

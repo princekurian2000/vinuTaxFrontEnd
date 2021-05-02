@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import * as bcrypt from 'bcryptjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient ,HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-
-  constructor(private http:HttpClient) { }
+   headers = new HttpHeaders();
+  constructor(private http:HttpClient) { 
+    this.headers=new HttpHeaders();
+  }
   findHash(str:string){   
     const salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(str, 10);
@@ -51,8 +53,23 @@ export class ApiService {
  getAllIncomeAndExpences(email:string){
   return this.http.post("http://localhost:3000/getIncomesExpence",{"email":email});
  }
+//  tokemcall(){  
+//    return  this.http.get("http://localhost:8080/unrestrictedCall");
+//   // this.headers.set("Access-Control-Allow-Origin", "*");
+//   // this.headers.append("Accept","application/vnd.hmrc.1.0+json");  
+//   // return this.http.get("https://test-api.service.hmrc.gov.uk/hello/world",{headers: this.headers});
+//  }
  hmrcCall(){
-   return this.http.get("http://localhost:8080/unrestrictedCall");
+    //return this.http.get("https://api.service.hmrc.gov.uk/hello/world");
+    //request oauth token
+      
+    //return this.http.get("http://localhost:8080/applicationCall");
+    
+    
+    this.headers.append("Accept","application/vnd.hmrc.1.0+json");    
+    this.headers.append("Access-Control-Allow-Origin", "*");
+    // this.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    return this.http.get("https://api.service.hmrc.gov.uk/hello/world",{headers: this.headers});
  }
  checkHmrcDataUploaded(email:string,year:string,quarter:string){
   return this.http.post("http://localhost:3000/checkHmrcUploaded",{"userEmailId":email,"year":year,"quarter":quarter});
