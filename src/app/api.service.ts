@@ -77,4 +77,16 @@ export class ApiService {
 hmrcDataUploaded(email:string,year:string,quarter:string){
   return this.http.post("http://localhost:3000/hmrcUploaded",{"userEmailId":email,"year":year,"quarter":quarter});
 }
+getIncomeID(email:string){
+  return this.http.post("http://localhost:3000/getIncomeID",{"email":email});
+}
+getExpenceID(email:string){
+  return this.http.post("http://localhost:3000/getExpenceID",{"email":email});
+}
+modifyIncomes(email:string,originalincomes:any[],modifiedincomes:any[]){
+  return this.http.post("http://localhost:3000/modifyIncomes",{"email":email,"originalincomes":originalincomes,"modifiedincomes":modifiedincomes});
+}
+modifyExpences(email:string,originalexpences:any[],modifiedexpences:any[]){
+  return this.http.post("http://localhost:3000/modifyIncomes",{"email":email,"originalexpences":originalexpences,"modifiedexpences":modifiedexpences});
+}
 }

@@ -11,6 +11,7 @@ export class DashboardComponent implements OnInit {
   username="";
   categoryadded=false;
   public incomes: any[] = [{
+    id: '',
     category: '',    
     description: '',
     amount: '',
@@ -19,23 +20,19 @@ export class DashboardComponent implements OnInit {
    options = [];  
   selectedUser: any; 
   email="";
+  incomeid=0;
 //category drop down ends
   constructor(private router:Router,private api:ApiService) { 
     if(localStorage.getItem("loggedIn")!="true"){
       this.router.navigate(['']);
     }
     this.username=localStorage.getItem("uName"); 
-    this.api.getCategories().subscribe((data:any)=>{
-      console.log(data);
-      // data.forEach(myFunction);
-      // function myFunction(value) {
-      //  this.options.push(value.category);
-      // }
+    this.api.getCategories().subscribe((data:any)=>{   
       data.forEach(element => {
         this.options.push(element.category);
       });
-
     });  
+    
   }
 
   ngOnInit(): void {
@@ -67,22 +64,33 @@ export class DashboardComponent implements OnInit {
         }); 
       }
     }
-    this.api.updateIncomes(this.email,this.incomes).subscribe((data:any)=>{
-      if(data.msg=="Updated"){
-        window.alert("Saved Successfully");
-      }
-      else{
-        window.alert("Please Try after some time");
-      }  
+
+    this.api.getIncomeID(this.email).subscribe((data:any)=>{
+      this.incomeid=parseInt(data.len);      
+      this.incomes.forEach(income => {
+        income.id=this.incomeid;
+        this.incomeid++;
+      });
+      this.incomeid=0;
+      this.api.updateIncomes(this.email,this.incomes).subscribe((data:any)=>{
+        if(data.msg=="Updated"){
+          window.alert("Saved Successfully");
+        }
+        else{
+          window.alert("Please Try after some time");
+        }  
+      });
     });
     this.router.navigate(['/expence']);
   }
   addNewIncomeField(i: number){
     this.categoryadded=true;
     this.incomes.push({
+      id: '',
+      category: '',    
       description: '',
       amount: '',
-       date: '' 
+      date: ''    
     });
     //Add category to database
     

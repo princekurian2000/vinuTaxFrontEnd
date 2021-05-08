@@ -42,7 +42,7 @@
                     <tr>
                         <th  colspan="2">Incomes</th>                        
                     </tr>                   
-                    <tr *ngFor="let income of consolidatedincomes | keyvalue; let i = index;" (click)="onItemClick($event, income.key)">
+                    <tr *ngFor="let income of consolidatedincomes | keyvalue; let i = index;" (click)="onIncomeClick($event, income.key)">
                       <td><a>{{income.key}}</a></td>
                       <td>{{income.value}}</td>
                       <!-- <td>{{income.category}}</td>
@@ -51,24 +51,66 @@
                     <tr>
                         <th colspan="2">Expences</th>                        
                     </tr>
-                    <tr *ngFor="let expence of consolidatedexpences | keyvalue; let i = index;">
-                      <td>{{expence.key}}</td>
+                    <tr *ngFor="let expence of consolidatedexpences | keyvalue; let i = index;" (click)="onExpenceClick($event, expence.key)">
+                      <td><a >{{expence.key}}</a></td>
                       <td>{{expence.value}}</td>
                     </tr>
                 </table>
         </div>
         <div class="col col-sm-9 col-md-9 col-lg-9" style="border-style: groove;">
-            <table class="table">
+          <form #addressForm="ngForm" ngNativeValidate  (ngSubmit)="updateIncome()">  
+            <table class="table" *ngIf="incomeclick">
                   <tr>
-                    <th  colspan="4">Detailed list New</th>                        
-                  </tr>              
-                  <tr *ngFor="let displayincome of displayincomes ; let i = index;">                               
-                      <td>{{displayincome.category}}</td>
-                      <td>{{displayincome.date}}</td>
-                      <td>{{displayincome.description}}</td>
-                      <td>{{displayincome.amount}}</td>
+                    <th  colspan="4">Update Incomes</th>                        
+                  </tr>  
+                
+                    <tr>
+                      <!-- <th style="text-align: center;">No</th> -->
+                      <th style="text-align: center;">Category</th>
+                      <th style="text-align: center;">Date</th>
+                      <th style="text-align: center;">Description</th>
+                      <th style="text-align: center;">Amount</th>
+                  </tr>
+                           
+                  <tr *ngFor="let displayincome of displayincomes ; let i = index;">  
+                      <!-- <td> {{displayincome.category}}</td>                                                    -->
+                      <td><input name="cat_{{i}}" class="form-control"  [(ngModel)]="displayincome.category" readonly></td> 
+                      <!-- <td>{{displayincome.category}}</td> -->
+                      <td><input name="date_{{i}}" type="date" class="form-control"  [(ngModel)]="displayincome.date" required></td> 
+                      <td><input  name="desc_{{i}}" class="form-control"  [(ngModel)]="displayincome.description" required></td> 
+                      <td><input name="amt_{{i}}" class="form-control"  [(ngModel)]="displayincome.amount" required></td> 
+                     
                  </tr>
+                 <tr><td colspan="4" align="center"><button type="submit" class="btn btn-primary">Update Income</button></td></tr>
             </table>
+          </form>
+          <form  #addressForm="ngForm" ngNativeValidate  (ngSubmit)="updateExpence()">
+            <table class="table" *ngIf="expenceclick">
+              <tr>
+                <th  colspan="4">Update Expences</th>                        
+              </tr> 
+              <tr>
+                <!-- <th style="text-align: center;">No</th> -->
+                <th style="text-align: center;">Category</th>
+                <th style="text-align: center;">Date</th>
+                <th style="text-align: center;">Description</th>
+                <th style="text-align: center;">Amount</th>
+            </tr>
+                     
+            <tr *ngFor="let displayexpence of displayexpences ; let i = index;">  
+                <!-- <td> {{displayincome.category}}</td>                                                    -->
+                <td><input  name="cat_{{i}}" class="form-control"  [(ngModel)]="displayexpence.category" readonly></td> 
+                <!-- <td>{{displayincome.category}}</td> -->
+                <td><input name="date_{{i}}" type="date" class="form-control"  [(ngModel)]="displayexpence.date" required></td> 
+                <td><input name="desc_{{i}}" class="form-control"  [(ngModel)]="displayexpence.description" required></td> 
+                <td><input name="amt_{{i}}" class="form-control"  [(ngModel)]="displayexpence.amount" required></td> 
+               
+           </tr>             
+           
+             <tr><td colspan="4" align="center"><button type="submit" class="btn btn-primary">Update Expence</button></td></tr>
+        </table>
+      </form>  
         </div>
      </div>
 </div>
+

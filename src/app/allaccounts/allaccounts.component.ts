@@ -20,6 +20,11 @@ export class AllaccountsComponent implements OnInit {
   lowerdate="";
   higherdate="";
   displayincomes=[];
+  originalincomes=[];
+  displayexpences=[];
+  originalexpences=[];
+  incomeclick=false;
+  expenceclick=false;
  
   consolidatedincomes = new Map<string, number>();
   consolidatedexpences= new Map<string, number>();
@@ -39,12 +44,12 @@ export class AllaccountsComponent implements OnInit {
     this.lowerdate="20"+this.selectedYear+"-04-06";
     this.higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-04-05";
     this.selectedQuarter="0";
-
+    this.email=localStorage.getItem("uEmail"); 
     this.getIncomesAndExpences();
   }
 
   ngOnInit(): void {
-   
+    this.email=localStorage.getItem("uEmail"); 
   }
   yearChange(){
     this.lowerdate="20"+this.selectedYear+"-04-06";
@@ -75,28 +80,70 @@ export class AllaccountsComponent implements OnInit {
       this.lowerdate="20"+(parseInt(this.selectedYear)+1).toString()+"-01-6";
       this.higherdate="20"+(parseInt(this.selectedYear)+1).toString()+"-04-05";
     }
-    this.api.checkHmrcDataUploaded(this.email,this.selectedYear,this.selectedQuarter).subscribe(async (data:any)=>{      
-      if((data.msg=="Not Uploaded")&&(this.selectedQuarter!="0")){
-        if((this.today.getTime()> new Date(this.higherdate).getTime())){   
-          //Enable hmrc Enable button  
-          // this.hmrcbtndisabled=false;
-        }
-      }
-    });    
+    // this.api.checkHmrcDataUploaded(this.email,this.selectedYear,this.selectedQuarter).subscribe(async (data:any)=>{      
+    //   if((data.msg=="Not Uploaded")&&(this.selectedQuarter!="0")){
+    //     if((this.today.getTime()> new Date(this.higherdate).getTime())){   
+    //       //Enable hmrc Enable button  
+    //       // this.hmrcbtndisabled=false;
+    //     }
+    //   }
+    // });    
     this.getIncomesAndExpences();    
   }
-  onItemClick (event, data){ 
+  onIncomeClick (event, data){ 
+    this.incomeclick=true;
+    this.expenceclick=false;
     this.displayincomes=[];
+    this.originalincomes=[];
     for(var i=0;i<this.incomes.length;i++){
       var category=this.incomes[i].category;     
         if(category==data){
           this.displayincomes.push(this.incomes[i]);
+          this.originalincomes.push(this.incomes[i]);
         }  
     }
+  }
+  updateIncome(){
+    this.email=localStorage.getItem("uEmail"); 
+    this.api.modifyIncomes(this.email,this.originalincomes,this.displayincomes).subscribe((data:any)=>{
+      if(data.msg=="Updated"){
+        window.alert("Updated Successfully");
+      }
+      else{
+        window.alert("Please Try after some time");
+      }  
+    });
+  }
+  onExpenceClick (event, data){ 
+    this.incomeclick=false;
+    this.expenceclick=true;
+    this.displayexpences=[];
+    this.originalexpences=[];
+    for(var i=0;i<this.expences.length;i++){
+      var category=this.expences[i].category;     
+        if(category==data){
+          this.displayexpences.push(this.expences[i]);
+          this.originalexpences.push(this.expences[i]);
+        }  
+    }
+  }
+  updateExpence(){
+   
+    this.email=localStorage.getItem("uEmail"); 
+    this.api.modifyExpences(this.email,this.originalexpences,this.displayexpences).subscribe((data:any)=>{
+      if(data.msg=="Updated"){
+        window.alert("Updated Successfully");
+      }
+      else{
+        window.alert("Please Try after some time");
+      }  
+    });
   }
   getIncomesAndExpences(){ 
     this.incomes=[]   ;
     this.expences=[];
+    this.displayincomes=[];
+    this.displayexpences=[];
     this.consolidatedincomes.clear();
     this.consolidatedexpences.clear();
     this.totalincome=0;
@@ -141,13 +188,7 @@ export class AllaccountsComponent implements OnInit {
                 resolve();                
              }); 
       }    
-     // let jsonString = JSON.stringify(jsonObject);
-      
-      //finding total expence      
-      this.expences.forEach(element => {        
-        this.totalexpence=this.totalexpence+element.amount;
-      });
-      this.netincome=this.totalincome-this.totalexpence;
+    
     }); 
   }
 

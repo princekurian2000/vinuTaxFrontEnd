@@ -28,6 +28,7 @@
                               </tr>
                               <tr *ngFor="let income of incomes; let i = index;let last = last;">
                                 <td>{{i+1}}</td>
+                                
                                 <td>
                                   <input name="filterCato_{{i}}" list="options" class="form-control" placeholder="Category" [(ngModel)]="income.category" required>
                                   <datalist id="options">

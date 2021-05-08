@@ -9,6 +9,8 @@ import {ApiService} from '../api.service'
 })
 export class ExpenceComponent implements OnInit {
   public expences: any[] = [{
+    id: '',
+    category: '', 
     description: '',
     amount: '',
     date: ''    
@@ -17,6 +19,7 @@ export class ExpenceComponent implements OnInit {
   selectedUser: any; 
   email="";
   categoryadded=false;
+  expenceid=0;
   constructor(private router:Router,private api:ApiService) {
     if(localStorage.getItem("loggedIn")!="true"){
       this.router.navigate(['']);
@@ -57,25 +60,37 @@ export class ExpenceComponent implements OnInit {
           }  
         });
       }  
-
     }
-    this.api.updateExpences(this.email,this.expences).subscribe((data:any)=>{
-      if(data.msg=="Updated"){
-        window.alert("Saved Successfully");
-      }
-      else{
-        window.alert("Please Try after some time");
-      }  
+    this.api.getExpenceID(this.email).subscribe((data:any)=>{
+      this.expenceid=parseInt(data.len);      
+      this.expences.forEach(expence => {
+        expence.id=this.expenceid;
+        this.expenceid++;
+      });
+      this.expenceid=0;
+      this.api.updateExpences(this.email,this.expences).subscribe((data:any)=>{
+        if(data.msg=="Updated"){
+          window.alert("Saved Successfully");
+        }
+        else{
+          window.alert("Please Try after some time");
+        }  
+      });
+
     });
+
+  
     this.router.navigate(['/report']);
 
   }
   addNewExpenceField(i: number){
     this.categoryadded=true;
     this.expences.push({
+      id: '',
+      category: '', 
       description: '',
       amount: '',
-       date: '' 
+      date: ''   
     });
       //Add category to database
     
