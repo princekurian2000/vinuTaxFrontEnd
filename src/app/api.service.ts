@@ -87,6 +87,6 @@ modifyIncomes(email:string,originalincomes:any[],modifiedincomes:any[]){
   return this.http.post("http://localhost:3000/modifyIncomes",{"email":email,"originalincomes":originalincomes,"modifiedincomes":modifiedincomes});
 }
 modifyExpences(email:string,originalexpences:any[],modifiedexpences:any[]){
-  return this.http.post("http://localhost:3000/modifyIncomes",{"email":email,"originalexpences":originalexpences,"modifiedexpences":modifiedexpences});
+  return this.http.post("http://localhost:3000/modifyExpences",{"email":email,"originalexpences":originalexpences,"modifiedexpences":modifiedexpences});
 }
 }

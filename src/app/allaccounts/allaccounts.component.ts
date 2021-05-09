@@ -95,6 +95,7 @@ export class AllaccountsComponent implements OnInit {
     this.expenceclick=false;
     this.displayincomes=[];
     this.originalincomes=[];
+     
     for(var i=0;i<this.incomes.length;i++){
       var category=this.incomes[i].category;     
         if(category==data){
@@ -108,17 +109,24 @@ export class AllaccountsComponent implements OnInit {
     this.api.modifyIncomes(this.email,this.originalincomes,this.displayincomes).subscribe((data:any)=>{
       if(data.msg=="Updated"){
         window.alert("Updated Successfully");
+        this.router.navigate(['/report']);
       }
       else{
         window.alert("Please Try after some time");
       }  
     });
   }
+
+  removeIncomeField(i: number) {
+    this.displayincomes.splice(i, 1);
+  }
+
   onExpenceClick (event, data){ 
     this.incomeclick=false;
     this.expenceclick=true;
     this.displayexpences=[];
     this.originalexpences=[];
+      
     for(var i=0;i<this.expences.length;i++){
       var category=this.expences[i].category;     
         if(category==data){
@@ -128,16 +136,19 @@ export class AllaccountsComponent implements OnInit {
     }
   }
   updateExpence(){
-   
     this.email=localStorage.getItem("uEmail"); 
     this.api.modifyExpences(this.email,this.originalexpences,this.displayexpences).subscribe((data:any)=>{
       if(data.msg=="Updated"){
         window.alert("Updated Successfully");
+        this.router.navigate(['/report']);
       }
       else{
         window.alert("Please Try after some time");
       }  
     });
+  }
+  removeExpenceField(i: number) {
+    this.displayexpences.splice(i, 1);
   }
   getIncomesAndExpences(){ 
     this.incomes=[]   ;
